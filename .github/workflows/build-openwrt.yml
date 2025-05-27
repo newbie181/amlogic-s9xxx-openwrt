@@ -1,147 +1,44 @@
-name: Build OpenWrt
-
 on:
-  repository_dispatch:
   workflow_dispatch:
     inputs:
       source_branch:
-        description: "Select the source branch"
+        description: "Source branch"
         required: false
         default: "openwrt-main"
       openwrt_board:
-        description: "Select device board"
+        description: "Device board"
         required: false
         default: "all"
       openwrt_kernel:
-        description: "Select kernel version"
+        description: "Kernel version"
         required: false
         default: "6.1.y_6.12.y"
-      auto_kernel:
-        description: "Auto use the latest kernel"
-        required: false
-        default: "true"
-      kernel_repo:
-        description: "Set the kernel repository"
-        required: false
-        default: "ophub/kernel"
-      kernel_usage:
-        description: "Set the tags of the stable kernel"
-        required: false
-        default: "stable"
-      openwrt_storage:
-        description: "Select image storage type"
-        required: false
-        default: "save"
       build_action:
-        description: "Select build mode"
+        description: "Build mode"
         required: false
         default: "all"
       build_target:
-        description: "Set the build target"
+        description: "Build target"
         required: false
         default: "armvirt"
       build_version:
-        description: "Set firmware version"
+        description: "Firmware version"
         required: false
         default: "auto"
       luci_theme:
-        description: "Set LuCI theme"
+        description: "LuCI theme"
         required: false
         default: "auto"
-      feeds_conf:
-        description: "Specify feeds.conf.default"
-        required: false
-        default: "default"
-      custom_feeds:
-        description: "Specify custom feeds"
-        required: false
-        default: "none"
-      custom_files:
-        description: "Specify custom files"
-        required: false
-        default: "none"
-      diy_script:
-        description: "Specify DIY script"
-        required: false
-        default: "none"
-      install_flippy:
-        description: "Install flippy boot script"
-        required: false
-        default: "true"
-      openwrt_url:
-        description: "Manually set firmware download URL"
-        required: false
-        default: "none"
-      openwrt_tag:
-        description: "Set OpenWrt version tag"
-        required: false
-        default: "none"
-      firmware_suffix:
-        description: "Set firmware filename suffix"
-        required: false
-        default: "img.gz"
-      build_firmware:
-        description: "Build firmware image or not"
-        required: false
-        default: "true"
       upload_firmware:
-        description: "Upload firmware to release"
+        description: "Upload firmware?"
         required: false
         default: "true"
       upload_release:
-        description: "Upload artifact to release"
+        description: "Upload release artifact?"
         required: false
         default: "true"
-      upload_cowtransfer:
-        description: "Upload to cowtransfer"
-        required: false
-        default: "false"
-      upload_wetransfer:
-        description: "Upload to WeTransfer"
-        required: false
-        default: "false"
-      upload_telegraph:
-        description: "Upload to Telegraph"
-        required: false
-        default: "false"
       server_chan_sckey:
         description: "ServerChan SCKEY"
-        required: false
-        default: ""
-      telegram_token:
-        description: "Telegram bot token"
-        required: false
-        default: ""
-      telegram_chat_id:
-        description: "Telegram chat ID"
-        required: false
-        default: ""
-      wecom_cid:
-        description: "WeCom company ID"
-        required: false
-        default: ""
-      wecom_aid:
-        description: "WeCom agent ID"
-        required: false
-        default: ""
-      wecom_secret:
-        description: "WeCom app secret"
-        required: false
-        default: ""
-      wecom_userid:
-        description: "WeCom user ID"
-        required: false
-        default: ""
-      pushplus_token:
-        description: "PushPlus token"
-        required: false
-        default: ""
-      ddnsto_token:
-        description: "DDNSTO token"
-        required: false
-        default: ""
-      webhook_url:
-        description: "Custom webhook URL"
         required: false
         default: ""
       

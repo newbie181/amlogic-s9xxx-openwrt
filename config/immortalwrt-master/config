@@ -1,0 +1,44 @@
+CONFIG_TARGET_armsr=y
+CONFIG_TARGET_armsr_armv8=y
+CONFIG_TARGET_armsr_armv8_DEVICE_generic=y
+
+# LuCI web interface
+CONFIG_PACKAGE_luci=y
+
+# Passwall dan dependensinya
+CONFIG_PACKAGE_luci-app-passwall=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ChinaDNS_NG=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_NaiveProxy=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_LIBSODIUM=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_GO=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_PLUS=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Geodata=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray_Plugin=y
+
+# OpenClash
+CONFIG_PACKAGE_luci-app-openclash=y
+
+# po2lmo compiler
+CONFIG_PACKAGE_po2lmo=y
+
+# Driver WiFi USB (Realtek / Mediatek)
+CONFIG_PACKAGE_kmod-rtl8188eu=y
+CONFIG_PACKAGE_kmod-rtl8192cu=y
+CONFIG_PACKAGE_kmod-rtl8812au-ct=y
+CONFIG_PACKAGE_kmod-mt7601u=y
+CONFIG_PACKAGE_kmod-mt76x2u=y
+
+# Utility umum
+CONFIG_PACKAGE_tcping=y
+CONFIG_PACKAGE_coreutils-nohup=y
+CONFIG_PACKAGE_coreutils-base64=y
+CONFIG_PACKAGE_coreutils-timeout=y
+CONFIG_PACKAGE_v2ray-core=y
+
+# LuCI Theme (opsional)
+CONFIG_PACKAGE_luci-theme-bootstrap=y

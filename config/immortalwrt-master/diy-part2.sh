@@ -12,9 +12,9 @@ git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/passwa
 echo "Cloning OpenClash..."
 git clone --depth=1 https://github.com/vernesong/OpenClash package/luci-app-openclash
 
-# Build dan install po2lmo (diperlukan untuk OpenClash)
-echo "Building po2lmo for OpenClash..."
-pushd package/luci-app-openclash/tools/po2lmo
+# Build dan install po2lmo dari repo terpisah
+git clone https://github.com/openwrt-dev/po2lmo.git
+pushd po2lmo
 make
 sudo make install
 popd

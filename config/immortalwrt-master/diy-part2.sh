@@ -31,9 +31,13 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #
 # ------------------------------- Other ends -------------------------------
 
-Add luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk package/openwrt-passwall
+# Tambahkan package Passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/passwall
 
-Add luci-app-openclash
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/openwrt-openclash
-pushd package/openwrt-openclash/tools/po2lmo && make && sudo make install 2>/dev/null && popd
+# Tambahkan package OpenClash
+git clone --depth=1 https://github.com/vernesong/OpenClash package/luci-app-openclash
+
+# Compile dan install po2lmo
+pushd package/luci-app-openclash/tools/po2lmo
+make && sudo make install
+popd

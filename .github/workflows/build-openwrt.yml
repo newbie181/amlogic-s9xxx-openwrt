@@ -1,44 +1,89 @@
+name: Build OpenWrt
+
 on:
   workflow_dispatch:
     inputs:
       source_branch:
-        description: "Source branch"
+        description: "Select the source branch"
         required: false
         default: "openwrt-main"
+        type: choice
+        options:
+          - openwrt-main
+          - lede-master
+          - immortalwrt-master
       openwrt_board:
-        description: "Device board"
+        description: "Select device board"
         required: false
         default: "all"
+        type: choice
+        options:
+          - all
+          - s905x
+          - s912
+          - rock5b
+          - orangepi-5-plus
+          # ...tambahkan board lain sesuai kebutuhan
       openwrt_kernel:
-        description: "Kernel version"
+        description: "Select kernel version"
         required: false
         default: "6.1.y_6.12.y"
-      build_action:
-        description: "Build mode"
+        type: choice
+        options:
+          - 5.4.y
+          - 5.10.y
+          - 5.15.y
+          - 6.1.y
+          - 6.6.y
+          - 6.12.y
+          - 5.4.y_5.10.y
+          - 5.15.y_6.1.y
+          - 6.1.y_6.12.y
+      auto_kernel:
+        description: "Auto use the latest kernel"
         required: false
-        default: "all"
-      build_target:
-        description: "Build target"
-        required: false
-        default: "armvirt"
-      build_version:
-        description: "Firmware version"
-        required: false
-        default: "auto"
-      luci_theme:
-        description: "LuCI theme"
-        required: false
-        default: "auto"
-      upload_firmware:
-        description: "Upload firmware?"
-        required: false
-        default: "true"
-      upload_release:
-        description: "Upload release artifact?"
-        required: false
-        default: "true"
-      server_chan_sckey:
-        description: "ServerChan SCKEY"
-        required: false
-        default: ""
-      
+        default: true
+        type: boolean
+
+env:
+  TZ: America/New_York
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libncurses5-dev gawk git gettext unzip file wget
+
+      - name: Clone OpenWrt repository
+        run: |
+          git clone --depth 1 --branch ${{ inputs.source_branch }} https://github.com/openwrt/openwrt.git
+
+      - name: Copy config and patch files (if any)
+        run: |
+          # Contoh perintah copy config jika ada di repo lain atau folder config
+          # cp config/${{ inputs.source_branch }}/config openwrt/.config || true
+          echo "Skipping config copy, sesuaikan jika perlu"
+
+      - name: Update feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Build OpenWrt firmware
+        run: |
+          cd openwrt
+          make defconfig
+          make -j$(nproc) V=s
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: openwrt-firmware
+          path: openwrt/bin/targets/

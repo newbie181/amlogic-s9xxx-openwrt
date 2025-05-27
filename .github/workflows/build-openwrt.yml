@@ -23,7 +23,6 @@ on:
           - s912
           - rock5b
           - orangepi-5-plus
-          # ...tambahkan board lain sesuai kebutuhan
       openwrt_kernel:
         description: "Select kernel version"
         required: false
@@ -55,20 +54,11 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Set up environment
+      - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libncurses5-dev gawk git gettext unzip file wget
+          sudo apt-get install -y build-essential c
 
-      - name: Clone OpenWrt repository
-        run: |
-          git clone --depth 1 --branch ${{ inputs.source_branch }} https://github.com/openwrt/openwrt.git
-
-      - name: Copy config and patch files (if any)
-        run: |
-          # Contoh perintah copy config jika ada di repo lain atau folder config
-          # cp config/${{ inputs.source_branch }}/config openwrt/.config || true
-          echo "Skipping config copy, sesuaikan jika perlu"
 
       - name: Update feeds
         run: |
@@ -87,4 +77,3 @@ jobs:
         with:
           name: openwrt-firmware
           path: openwrt/bin/targets/
-

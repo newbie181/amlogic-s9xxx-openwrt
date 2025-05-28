@@ -51,10 +51,10 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout workflow repository
+      - name: Checkout this workflow repo
         uses: actions/checkout@v4
 
-      - name: Install build dependencies
+      - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential clang flex g++ gawk gcc-multilib \
@@ -63,29 +63,36 @@ jobs:
             libssl-dev libelf-dev ecj fastjar java-propose-classpath \
             libglib2.0-dev xmlto ccache ninja-build
 
-          # Ensure clang++ exists
-          if ! command -v clang++ >/dev/null 2>&1; then
-            sudo ln -s /usr/bin/clang /usr/bin/clang++
-          fi
-
-      - name: Clone OpenWrt source
+      - name: Set OpenWrt repo URL
+        id: repo
         run: |
-          git clone --depth 1 --branch "${{ inputs.source_branch }}" https://github.com/openwrt/openwrt.git
+          case "${{ inputs.source_branch }}" in
+            lede-master)
+              echo "url=https://github.com/coolsnowwolf/lede.git" >> "$GITHUB_OUTPUT"
+              ;;
+            immortalwrt-master)
+              echo "url=https://github.com/immortalwrt/immortalwrt.git" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "url=https://github.com/openwrt/openwrt.git" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
 
-      - name: Update and install feeds
-        working-directory: ./openwrt
+      - name: Clone OpenWrt
+        run: git clone --depth 1 --branch ${{ inputs.source_branch }} ${{ steps.repo.outputs.url }} openwrt
+
+      - name: Update feeds
         run: |
+          cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Download all sources
-        working-directory: ./openwrt
-        run: make download -j$(nproc)
+      - name: Configure default
+        run: |
+          cd openwrt
+          make defconfig
 
-      - name: Configure default settings
-        working-directory: ./openwrt
-        run: make defconfig
-
-      - name: Compile OpenWrt firmware
-        working-directory: ./openwrt
-        run: make -j$(nproc) V=s
+      - name: Build OpenWrt firmware
+        run: |
+          cd openwrt
+          make -j$(nproc) V=s

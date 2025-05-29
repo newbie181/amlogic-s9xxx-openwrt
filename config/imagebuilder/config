@@ -1,0 +1,45 @@
+CONFIG_TARGET_armsr=y
+CONFIG_TARGET_armsr_armv8=y
+CONFIG_TARGET_armsr_armv8_DEVICE_generic=y
+
+# LuCI Web Interface
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-theme-bootstrap=y
+
+# Passwall (Basic only: SS, SSR, Trojan)
+CONFIG_PACKAGE_luci-app-passwall=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ChinaDNS_NG=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_LIBSODIUM=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_PLUS=y
+
+# (Opsional) OpenClash
+CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_po2lmo=y
+
+# PHP & Web Server for Tiny File Manager
+CONFIG_PACKAGE_php8=y
+CONFIG_PACKAGE_php8-cgi=y
+CONFIG_PACKAGE_php8-mod-session=y
+CONFIG_PACKAGE_php8-mod-json=y
+CONFIG_PACKAGE_php8-mod-mbstring=y
+CONFIG_PACKAGE_php8-mod-simplexml=y
+CONFIG_PACKAGE_php8-mod-ctype=y
+CONFIG_PACKAGE_php8-mod-hash=y
+CONFIG_PACKAGE_php8-mod-openssl=y
+CONFIG_PACKAGE_uhttpd=y
+CONFIG_PACKAGE_uhttpd-mod-ubus=y
+CONFIG_PACKAGE_uhttpd-mod-redirect=y
+CONFIG_PACKAGE_wget=y
+
+# WiFi USB Drivers (umum digunakan)
+CONFIG_PACKAGE_kmod-rtl8188eu=y
+CONFIG_PACKAGE_kmod-rtl8192cu=y
+CONFIG_PACKAGE_kmod-rtl8812au-ct=y
+CONFIG_PACKAGE_kmod-mt7601u=y
+CONFIG_PACKAGE_kmod-mt76x2u=y
+
+# Utility umum
+CONFIG_PACKAGE_tcping=y
+CONFIG_PACKAGE_coreutils-base64=y
+CONFIG_PACKAGE_coreutils-timeout=y
